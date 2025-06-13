@@ -1,0 +1,21 @@
+const mongoose = require("mongoose");
+
+const connect = async () => {
+  const uri = process.env.mongodb_uri;
+
+  // Set strictQuery explicitly to silence warning
+  mongoose.set("strictQuery", true); // or false if you want to allow flexible querying
+
+  try {
+    const conn = await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connected successfully!");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    process.exit(1); // Exit process on failure
+  }
+};
+
+module.exports = connect;
