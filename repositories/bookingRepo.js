@@ -1,7 +1,7 @@
+const Booking = require("../models/bookingModel");
 const sendMail = require("../utils/mailer");
 
 const sendBookingEmail = async (data) => {
-
   const subject = "New Booking Confirmation";
   const text = `
     Name: ${data.name}
@@ -10,9 +10,7 @@ const sendBookingEmail = async (data) => {
     From: ${data.from}
     To: ${data.to}
     Pickup Time: ${data.pickupTime}
-
-    Vehicle: ${data.vehicle?.type || "-"} (${data.vehicle?.capacity} seats)
-
+    Vehicle: ${data.vehicle?.type || "-"} (${data.vehicle?.capacity || 0} seats)
     Total KMs: ${data.totalKms}
     Base Fare: ₹${data.baseFair}
     Toll Charge: ₹${data.tollCharge}
@@ -21,7 +19,17 @@ const sendBookingEmail = async (data) => {
     Total Fare: ₹${data.totalFare}
   `;
 
-  await sendMail(data.email, subject, text); // update this email
+  await sendMail(data.email, subject, text);
 };
 
-module.exports = { sendBookingEmail };
+const handleBooking = async (data) => {
+  const booking = new Booking(data);
+
+  const saved = await booking.save();
+
+  await sendBookingEmail(data);
+
+  return saved;
+};
+
+module.exports = { handleBooking };

@@ -82,6 +82,7 @@ const GetDistanceRepository = async (originPlace, destinationPlace) => {
           emissionType: "GASOLINE",
         },
       },
+      languageCode: "en-US",
     };
 
     const headers = {
@@ -104,14 +105,16 @@ const GetDistanceRepository = async (originPlace, destinationPlace) => {
     const route = res.data.routes[0];
     const leg = route.legs[0];
 
+
     return {
       origin: originPlace,
       destination: destinationPlace,
       distanceMeters: leg.distanceMeters/1000,
       duration: leg.duration,
-      tolls: route.travelAdvisory?.tollInfo?.estimatedPrice || [],
+      tolls: route.travelAdvisory?.tollInfo?.estimatedPrice || '',
       polyline: route.polyline?.encodedPolyline,
       steps: leg.steps,
+      apiKey: API_KEY,
     };
   } catch (error) {
     console.error("Route fetch error:", error.response?.data || error.message);

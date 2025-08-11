@@ -5,6 +5,13 @@ const dotenv = require("dotenv");
 const GetDistance = require("./routes/GetDistanceRoutes");
 const PriceListRoutes = require("./routes/PriceListRoutes");
 const bookingRoute = require('./routes/bookingRoute')
+const bookingRoutes = require("./routes/booking.Routes")
+const locationRoutes = require("./routes/LocationRoute");
+const adminRoutes = require("./routes/admin.routes");
+const vehicleRoutes = require("./routes/vehicle.route");
+const imageRoute = require('./routes/image.routes')
+const placeRoutes = require('./routes/places.routes')
+
 
 const connect = require("./db");
 
@@ -15,7 +22,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "*", // or set your frontend IP
+}));
+
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -23,6 +33,9 @@ connect();
 
 // // Attach the router to /api
 // app.use("/api", router); // ✅ This line is crucial!
+
+
+
 
 // Sample route
 app.get("/", (req, res) => {
@@ -33,6 +46,14 @@ app.get("/", (req, res) => {
 app.use("/distance", GetDistance);
 app.use("/pricelist", PriceListRoutes);
 app.use("/conform", bookingRoute);
+app.use("/location", locationRoutes);
+
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/admin", adminRoutes);
+app.use('/api/vehicles', vehicleRoutes);
+app.use("/image", imageRoute);
+app.use("/api/places", placeRoutes);
+
 
 // 404 handler
 app.use((req, res) => {
