@@ -16,6 +16,7 @@ const placeRoutes = require('./routes/places.routes')
 const connect = require("./db");
 
 dotenv.config();
+// console.log('process.env',process.env)
 
 const app = express();
 
@@ -48,7 +49,7 @@ app.use("/pricelist", PriceListRoutes);
 app.use("/conform", bookingRoute);
 app.use("/location", locationRoutes);
 
-app.use("/api/bookings", bookingRoutes);
+app.use("/api/bookings", bookingRoutes); 
 app.use("/api/admin", adminRoutes);
 app.use('/api/vehicles', vehicleRoutes);
 app.use("/image", imageRoute);
@@ -61,6 +62,6 @@ app.use((req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, () => { 
+  console.log(`Server running on http://localhost:${PORT}`); 
 });
