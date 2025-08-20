@@ -53,14 +53,14 @@ app.use((req, res) => {
   res.status(404).json({ error: "Not Found" });
 });
 
-// Export app for Lambda
-// const awsServerlessExpress = require("aws-serverless-express");
-// const server = awsServerlessExpress.createServer(app);
+Export app for Lambda
+const awsServerlessExpress = require("aws-serverless-express");
+const server = awsServerlessExpress.createServer(app);
 
-// exports.handler = (event, context) => {
-//   return awsServerlessExpress.proxy(server, event, context);
-// };
+exports.handler = (event, context) => {
+  return awsServerlessExpress.proxy(server, event, context);
+};
 
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+  // app.listen(PORT, () => {
+  //   console.log(`Server running on http://localhost:${PORT}`);
+  // });
