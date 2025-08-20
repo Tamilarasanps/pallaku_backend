@@ -44,11 +44,6 @@ jobs:
             --function-name arn:aws:lambda:ap-south-1:386825533951:function:my-backend-api \
             --zip-file fileb://code.zip
 
-      # ✅ API Gateway test only (no Lambda Function URL)
-      #   - name: Test API Gateway endpoint
-      #     run: |
-      #       echo "Testing API Gateway..."
-      #       curl -f https://f8cm534hrqwnbvi.execute-api.ap-south-1.amazonaws.com/default/my-backend-api || exit 1
 
       # ✅ Updated artifact action
       - name: Upload Lambda Zip
