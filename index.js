@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+
 const GetDistance = require("./routes/GetDistanceRoutes");
 const PriceListRoutes = require("./routes/PriceListRoutes");
 const bookingRoute = require("./routes/bookingRoute");
@@ -17,22 +18,16 @@ const connect = require("./db");
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(
-  cors({
-    origin: "*", // Adjust if needed
-  })
-);
-
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(morgan("dev"));
 
 // DB connection
 connect();
 
-// API routes
+// Routes
 app.use("/distance", GetDistance);
 app.use("/pricelist", PriceListRoutes);
 app.use("/conform", bookingRoute);
@@ -51,19 +46,11 @@ app.get("/hello", (req, res) => {
   res.json({ message: "Hello from Lambda + Express!" });
 });
 
-// 404 handler
+// 404
 app.use((req, res) => {
   res.status(404).json({ error: "Not Found" });
 });
 
-// Export app for Lambda
-const awsServerlessExpress = require("aws-serverless-express");
-const server = awsServerlessExpress.createServer(app);
-
-exports.handler = (event, context) => {
-  return awsServerlessExpress.proxy(server, event, context);
-};
-
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}`);
-// });
+// ✅ Use @vendia/serverless-express
+const serverlessExpress = require("@vendia/serverless-express");
+exports.handler = serverlessExpress({ app });
