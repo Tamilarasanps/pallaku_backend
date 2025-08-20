@@ -1,23 +1,59 @@
-name: Backend
+name: Deploy Lambda
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - main # Deploy when pushing to main branch
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout repo
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # 2. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # 3. Install dependencies (clean install if package-lock.json exists)
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --legacy-peer-deps
+          else
+            npm install --legacy-peer-deps
+          fi
+
+      # 6. Zip Lambda function (exclude unnecessary files)
+      - name: Package Lambda
+        run: |
+          rm -f function.zip
+          zip -r function.zip . \
+            -x "*.git*" "*.github*" "node_modules/aws-sdk/*" "tests/*"
+
+      # 7. Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1 # Change this if needed
+          
+      # 8. Deploy Lambda function
+      - name: Test API Gateway endpoint
+        run: |
+          aws lambda update-function-code \
+            --function-name arn:aws:lambda:ap-south-1:386825533951:function:my-backend-api \
+            --zip-file fileb://function.zip
+
+      # 9. (Optional) Upload artifact for debugging
+      - name: Upload Lambda Zip
+        uses: actions/upload-artifact@v3
+        with:
+          name: lambda-zip
+          path: function.zip
