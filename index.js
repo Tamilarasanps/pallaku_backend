@@ -43,9 +43,12 @@ app.use("/api/vehicles", vehicleRoutes);
 app.use("/image", imageRoute);
 app.use("/api/places", placeRoutes);
 
-// Sample route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the API!" });
+});
+
+app.get("/hello", (req, res) => {
+  res.json({ message: "Hello from Lambda + Express!" });
 });
 
 // 404 handler
@@ -53,7 +56,7 @@ app.use((req, res) => {
   res.status(404).json({ error: "Not Found" });
 });
 
-Export app for Lambda
+// Export app for Lambda
 const awsServerlessExpress = require("aws-serverless-express");
 const server = awsServerlessExpress.createServer(app);
 
@@ -61,6 +64,6 @@ exports.handler = (event, context) => {
   return awsServerlessExpress.proxy(server, event, context);
 };
 
-  // app.listen(PORT, () => {
-  //   console.log(`Server running on http://localhost:${PORT}`);
-  // });
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
