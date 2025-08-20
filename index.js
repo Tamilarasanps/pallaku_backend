@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const cors = require("cors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
@@ -56,22 +55,15 @@ app.get("/helloe", (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ error: "Not Found" });
 });
-app.use((err, req, res, next) => {
-  res.status(500).json({ error: err.message || "Internal error" });
-});
 
 // Export app for Lambda
-// const awsServerlessExpress = require("aws-serverless-express");
-// const server = awsServerlessExpress.createServer(app);
+const awsServerlessExpress = require("aws-serverless-express");
+const server = awsServerlessExpress.createServer(app);
 
-// exports.handler = (event, context) => {
-//   return awsServerlessExpress.proxy(server, event, context);
-// };
+exports.handler = (event, context) => {
+  return awsServerlessExpress.proxy(server, event, context);
+};
 
-const serverlessExpress = require("@vendia/serverless-express");
-exports.handler = serverlessExpress({ app });
-
-module.exports = router;
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}`);
-// });
+  // app.listen(PORT, () => {
+  //   console.log(`Server running on http://localhost:${PORT}`);
+  // });
