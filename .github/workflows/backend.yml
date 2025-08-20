@@ -3,24 +3,21 @@ name: Deploy Lambda
 on:
   push:
     branches:
-      - main # Deploy when pushing to main branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      # 3. Install dependencies (clean install if package-lock.json exists)
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
@@ -29,31 +26,39 @@ jobs:
             npm install --legacy-peer-deps
           fi
 
-      # 6. Zip Lambda function (exclude unnecessary files)
+      - name: Run tests
+        run: npm test --if-present
+
+      - name: Build project
+        run: npm run build --if-present
+
       - name: Package Lambda
         run: |
-          rm -f function.zip
-          zip -r function.zip . \
-            -x "*.git*" "*.github*" "node_modules/aws-sdk/*" "tests/*"
+          rm -f code.zip
+          zip -r code.zip . -x "*.git*" "*.github*" "node_modules/aws-sdk/*" "tests/*"
 
-      # 7. Configure AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1 # Change this if needed
-          
-      # 8. Deploy Lambda function
-      - name: Test API Gateway endpoint
+          aws-region: ap-south-1
+
+      - name: Deploy Lambda function
         run: |
           aws lambda update-function-code \
             --function-name arn:aws:lambda:ap-south-1:386825533951:function:my-backend-api \
-            --zip-file fileb://function.zip
+            --zip-file fileb://code.zip
 
-      # 9. (Optional) Upload artifact for debugging
+      # ✅ API Gateway test only (no Lambda Function URL)
+      #   - name: Test API Gateway endpoint
+      #     run: |
+      #       echo "Testing API Gateway..."
+      #       curl -f https://f8cm534hrqwnbvi.execute-api.ap-south-1.amazonaws.com/default/my-backend-api || exit 1
+
+      # ✅ Updated artifact action
       - name: Upload Lambda Zip
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: lambda-zip
-          path: function.zip
+          path: code.zip
