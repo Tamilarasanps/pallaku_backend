@@ -6,6 +6,7 @@ const GetDistance = require("./routes/GetDistanceRoutes");
 const PriceListRoutes = require("./routes/PriceListRoutes");
 const bookingRoute = require("./routes/bookingRoute");
 const bookingRoutes = require("./routes/booking.Routes");
+const getBookingId = require("./routes/booking.Routes");
 const locationRoutes = require("./routes/LocationRoute");
 const adminRoutes = require("./routes/admin.routes");
 const vehicleRoutes = require("./routes/vehicle.route");
@@ -38,6 +39,7 @@ app.use("/pricelist", PriceListRoutes);
 app.use("/conform", bookingRoute);
 app.use("/location", locationRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api", getBookingId);
 app.use("/api/admin", adminRoutes);
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/image", imageRoute);
@@ -51,7 +53,7 @@ app.get("/helloe", (req, res) => {
   try {
     res.json({ message: "express route checking!! " });
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Errorhh'  });
+    res.status(500).json({ error: "Internal Server Errorhh" });
   }
 });
 
@@ -68,6 +70,6 @@ app.use((req, res) => {
 //   return awsServerlessExpress.proxy(server, event, context);
 // };
 
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

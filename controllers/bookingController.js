@@ -3,10 +3,9 @@ const { sendTelegramMessage } = require("../services/Telegram.service");
 
 const confirmBooking = async (req, res) => {
   const bookingData = req.body;
-  console.log("bookingData", bookingData);
 
   try {
-    await handleBooking(bookingData);
+   const result =  await handleBooking(bookingData);
 
     const message = `
 📅 *New Booking!*
@@ -25,7 +24,10 @@ Email: ${bookingData.email}
 
     await sendTelegramMessage(message);
 
-    res.status(200).json({ message: "Booking confirmed and email sent." });
+    res.status(200).json({
+      message: "Booking confirmed and email sent.",
+      newBooking: result,
+    });
   } catch (err) {
     console.error("Booking confirmation error:", err); // <-- log full error
     res.status(500).json({ error: "Failed to confirm booking" });
