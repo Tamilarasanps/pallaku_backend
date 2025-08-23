@@ -1,7 +1,6 @@
 const axios = require("axios");
 
 const searchLocations = async (query) => {
-  console.log("query : ", query);
   const response = await axios.get("https://nominatim.openstreetmap.org/search", {
   params: {
     q: query,
@@ -18,7 +17,6 @@ const searchLocations = async (query) => {
 });
 
 
-  console.log("response :", response);
   return response.data;
 };
 
