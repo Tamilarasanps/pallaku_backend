@@ -16,7 +16,6 @@ exports.updateMobile = async (req, res) => {
     await admin.save();
     res.status(200).json({ message: "Admin mobile updated", mobile: admin.mobile });
   } catch (error) {
-    console.error("Error updating admin mobile:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

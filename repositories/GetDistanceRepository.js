@@ -1,51 +1,5 @@
 const axios = require("axios");
 
-// const GetDistanceRepository = async (from, to) => {
-//   const apikey = process.env.GOOGLE_API_KEY; // ✅ move this inside the function
-//   console.log("Google API Key:", apikey);
-
-//   if (!apikey) {
-//     throw new Error("Google API Key is not defined in environment variables");
-//   }
-
-//   try {
-//     const response = await axios.get(
-//       "https://maps.googleapis.com/maps/api/distancematrix/json",
-//       {
-//         params: {
-//           origins: from,
-//           destinations: to,
-//           key: apikey,
-//         },
-//       }
-//     );
-
-//     const data = response.data;
-
-//     if (data.status !== "OK") {
-//       throw new Error("Google API error");
-//     }
-
-//     const distanceInfo = data.rows[0].elements[0];
-//     if (distanceInfo.status !== "OK") {
-//       throw new Error("Invalid location");
-//     }
-
-//     return {
-//       from,
-//       to,
-//       distanceText: distanceInfo.distance.text,
-//       distanceValue: distanceInfo.distance.value,
-//       durationText: distanceInfo.duration.text,
-//       durationValue: distanceInfo.duration.value,
-//     };
-//   } catch (error) {
-//     throw new Error(error.message || "Unknown error from Google API");
-//   }
-// };
-
-// const axios = require("axios");
-
 // Step 1: Convert place name to lat/lng
 const getLatLng = async (place) => {
   const API_KEY = process.env.GOOGLE_API_KEY;
@@ -117,7 +71,6 @@ const GetDistanceRepository = async (originPlace, destinationPlace) => {
       apiKey: API_KEY,
     };
   } catch (error) {
-    console.error("Route fetch error:", error.response?.data || error.message);
     return null;
   }
 };
@@ -125,10 +78,3 @@ const GetDistanceRepository = async (originPlace, destinationPlace) => {
 module.exports = GetDistanceRepository;
 
 
-// // Example:
-// getTollEstimate(
-//   { latitude: 10.7905, longitude: 78.7047 }, // Example: Trichy
-//   { latitude: 13.0827, longitude: 80.2707 }  // Example: Chennai
-// );
-
-// module.exports = GetDistanceRepository;

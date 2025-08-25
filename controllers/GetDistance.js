@@ -11,9 +11,9 @@ const GetDistance = async (req, res) => {
     }
 
     const distanceData = await GetDistanceRepository(from, to);
+    
     return res.status(200).json(distanceData);
   } catch (error) {
-    console.error("Distance fetch error:", error.message);
     return res
       .status(500)
       .json({ message: "Server error", error: error.message });

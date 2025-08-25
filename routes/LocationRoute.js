@@ -4,7 +4,6 @@ const { getSuggestions } = require("../services/Location.services");
 const handleError = require("../utils/error.handler");
 
 router.get("/search", async (req, res) => {
-  console.log('reached')
   try {
     const query = req.query.q;
     const suggestions = await getSuggestions(query);

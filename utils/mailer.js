@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-console.log('tri')
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -9,7 +8,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendMail = async (to, subject, text) => {
-    console.log(to, subject, text)
+
   const mailOptions = {
     from: 'karthikw2l@gmail.com',
     to: to,
@@ -21,7 +20,6 @@ const sendMail = async (to, subject, text) => {
     await transporter.sendMail(mailOptions);
     return { success: true, message: "OTP sent to email successfully" };
   } catch (err) {
-    console.error("Error sending OTP via email:", err);
     return { success: false, error: err.message };
   }
 };

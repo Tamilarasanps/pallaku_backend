@@ -5,7 +5,7 @@ const confirmBooking = async (req, res) => {
   const bookingData = req.body;
 
   try {
-   const result =  await handleBooking(bookingData);
+    const result = await handleBooking(bookingData);
 
     const message = `
 📅 *New Booking!*
@@ -19,7 +19,6 @@ Total Amount: ${bookingData.totalFare}
 Name: ${bookingData.name}
 Phone: ${bookingData.mobile}
 Email: ${bookingData.email}
-
     `;
 
     await sendTelegramMessage(message);
@@ -29,7 +28,6 @@ Email: ${bookingData.email}
       newBooking: result,
     });
   } catch (err) {
-    console.error("Booking confirmation error:", err); // <-- log full error
     res.status(500).json({ error: "Failed to confirm booking" });
   }
 };

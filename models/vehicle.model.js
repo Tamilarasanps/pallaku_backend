@@ -5,6 +5,9 @@ const vehicleSchema = new mongoose.Schema({
   capacity: { type: String, required: true },
   oneWayPrice: { type: Number, required: true },
   roundTripPrice: { type: Number, required: true },
+  oneWayTripMinKm: { type: Number, required: true },
+  roundTripMinKm: { type: Number, required: true },
+  driverAllowance: { type: Number, required: true },
   options: { type: [String], default: [] },
   img: { type: mongoose.Schema.Types.ObjectId, ref: 'fs.files' },
 }, {
@@ -13,3 +16,6 @@ const vehicleSchema = new mongoose.Schema({
 
 const Vehicle = mongoose.model('Vehicle', vehicleSchema);
 module.exports = Vehicle;
+
+
+

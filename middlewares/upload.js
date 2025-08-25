@@ -11,7 +11,6 @@ const storage = new GridFsStorage({
     useUnifiedTopology: true,
   },
   file: (req, file) => {
-    console.log(file)
     return {
       filename: `vehicle_${Date.now()}`,  // Custom filename
       bucketName: 'uploads',
