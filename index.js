@@ -12,6 +12,11 @@ const adminRoutes = require("./routes/admin.routes");
 const vehicleRoutes = require("./routes/vehicle.route");
 const imageRoute = require("./routes/image.routes");
 const placeRoutes = require("./routes/places.routes");
+const allowedOrigins = [
+  "https://shreepallakcabs.com",
+  "https://admin.shreepallakcabs.com",
+  "http://localhost:5173",
+];
 
 const connect = require("./db");
 
@@ -23,7 +28,9 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(
   cors({
-    origin: "*", // Adjust if needed
+    origin: allowedOrigins,
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
   })
 );
 
