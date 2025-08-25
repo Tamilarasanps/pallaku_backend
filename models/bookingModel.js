@@ -7,6 +7,7 @@ const vehicleSchema = new mongoose.Schema({
 });
 
 const bookingSchema = new mongoose.Schema({
+  bookingId: { type: String, required: true },
   name: { type: String, required: true },
   mobile: { type: String, required: true },
   email: { type: String, required: true },

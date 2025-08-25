@@ -1,14 +1,25 @@
+const { nanoid } = require("nanoid");
 const { handleBooking } = require("../repositories/bookingRepo");
 const { sendTelegramMessage } = require("../services/Telegram.service");
 
 const confirmBooking = async (req, res) => {
-  const bookingData = req.body;
+  function generateBookingId() {
+    const datePart = new Date().toISOString().slice(2, 10).replace(/-/g, ""); // YYMMDD
+    const randomPart = nanoid(8).toUpperCase(); // 8-character random ID
+    return `BK-${datePart}-${randomPart}`;
+  }
+
+  const bookingId = generateBookingId();
+  let bookingData = req.body;
+  bookingData.bookingId = bookingId;
 
   try {
     const result = await handleBooking(bookingData);
 
     const message = `
 📅 *New Booking!*
+
+BookingId: ${bookingId}
 From: ${bookingData.from}
 To: ${bookingData.to}
 Trip Type: ${bookingData.tripType}
