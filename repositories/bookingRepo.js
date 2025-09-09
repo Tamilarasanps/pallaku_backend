@@ -3,7 +3,6 @@ const sendMail = require("../utils/mailer");
 
 const sendBookingEmail = async (data) => {
   const subject = "Your Booking Confirmation – Thank You for Choosing Us!";
-
   const text = `
 Dear ${data.name},
 
@@ -42,17 +41,32 @@ Warm regards,
 [Shree Pallak Cabs]
   `;
 
-  await sendMail(data.email, subject, text);
+  try {
+    const result = await sendMail(data.email, subject, text);
+    return result;
+  } catch (err) {
+    throw new Error("Failed to send booking email: " + err.message);
+  }
 };
 
 const handleBooking = async (data) => {
-  const booking = new Booking(data);
+  try {
+    const booking = new Booking(data);
+    const saved = await booking.save();
 
-  const saved = await booking.save();
+    try {
+      await sendBookingEmail(data);
+    } catch (emailErr) {
+      console.error("Booking saved but email failed:", emailErr);
+      throw new Error(emailErr)
+      // Optionally, you can return partial success info
+    }
 
-  await sendBookingEmail(data);
-
-  return saved;
+    return saved;
+  } catch (err) {
+    console.error("Error creating booking:", err);
+    throw new Error("Failed to complete booking: " + err.message);
+  }
 };
 
 module.exports = { handleBooking };

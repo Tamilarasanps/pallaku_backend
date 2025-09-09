@@ -15,7 +15,7 @@ const placeRoutes = require("./routes/places.routes");
 const allowedOrigins = [
   "https://shreepallakcabs.com",
   "https://admin.shreepallakcabs.com",
-  "http://localhost:5173",
+  "http://localhost:5174",
 ];
 
 const connect = require("./db");

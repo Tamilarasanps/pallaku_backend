@@ -10,7 +10,6 @@ const transporter = nodemailer.createTransport({
     pass: process.env.GMAIL_PASS,
   },
 });
-
 const sendMail = async (to, subject, text) => {
   const mailOptions = {
     from: process.env.GMAIL_USER,
@@ -20,11 +19,12 @@ const sendMail = async (to, subject, text) => {
   };
 
   try {
-    await transporter.sendMail(mailOptions);
-    return { success: true, message: "OTP sent to email successfully" };
+
+    const info = await transporter.sendMail(mailOptions);
+  
+    return { success: true, message: "booking successful", info };
   } catch (err) {
-    console.log(err);
-    return { success: false, error: err.message };
+    throw new Error(err);
   }
 };
 
