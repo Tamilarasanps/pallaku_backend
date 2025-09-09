@@ -39,6 +39,7 @@ Email: ${bookingData.email}
       newBooking: result,
     });
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: "Failed to confirm booking" });
   }
 };

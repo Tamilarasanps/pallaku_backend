@@ -1,24 +1,29 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config();
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true for port 465, false for 587
   auth: {
-    user: "pallakcab@gmail.com", // replace with your email
-    pass: "Jsjsndid28hUhu88snsk", // use Gmail App Password, not real password
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
   },
 });
 
 const sendMail = async (to, subject, text) => {
   const mailOptions = {
-    from: "pallakcab@gmail.com",
-    to: to,
-    subject: subject,
-    text: text,
+    from: process.env.GMAIL_USER,
+    to,
+    subject,
+    text,
   };
 
   try {
     await transporter.sendMail(mailOptions);
     return { success: true, message: "OTP sent to email successfully" };
   } catch (err) {
+    console.log(err);
     return { success: false, error: err.message };
   }
 };
