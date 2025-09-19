@@ -2,6 +2,9 @@ const Booking = require("../models/bookingModel");
 const sendMail = require("../utils/mailer");
 
 const sendBookingEmail = async (data) => {
+  const formatedDate = data.departureDate.split("T")[0];
+  console.log("departureDate :", formatedDate);
+  console.log("data :", data);
   const subject = "Your Booking Confirmation – Thank You for Choosing Us!";
   const text = `
 Dear ${data.name},
@@ -16,6 +19,7 @@ Email: ${data.email}
 From: ${data.from}
 To: ${data.to}
 Pickup Time: ${data.pickupTime}
+Pickup Date: ${formatedDate}
 
 Vehicle Details:
 ------------------------
@@ -58,7 +62,7 @@ const handleBooking = async (data) => {
       await sendBookingEmail(data);
     } catch (emailErr) {
       console.error("Booking saved but email failed:", emailErr);
-      throw new Error(emailErr)
+      throw new Error(emailErr);
       // Optionally, you can return partial success info
     }
 

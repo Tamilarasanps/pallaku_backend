@@ -16,6 +16,7 @@ const allowedOrigins = [
   "https://shreepallakcabs.com",
   "https://admin.shreepallakcabs.com",
   "http://localhost:5174",
+  "http://localhost:5173",
 ];
 
 const connect = require("./db");
@@ -33,7 +34,6 @@ app.use(
     credentials: true,
   })
 );
-
 
 app.use(express.json());
 app.use(morgan("dev"));
@@ -80,5 +80,5 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-  console.log('running in external server')
+  console.log("running in external server");
 });

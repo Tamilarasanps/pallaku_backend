@@ -15,7 +15,10 @@ const confirmBooking = async (req, res) => {
 
   try {
     const result = await handleBooking(bookingData);
+    console.log("bookingData : ", bookingData);
 
+    const formatedDate = bookingData.departureDate.split("T")[0];
+    console.log("formatedDate :", formatedDate);
     const message = `
 📅 *New Booking!*
 
@@ -25,7 +28,7 @@ To: ${bookingData.to}
 Trip Type: ${bookingData.tripType}
 Vehicle: ${bookingData.vehicle?.type} (${bookingData.vehicle?.capacity} seats)
 Total KM: ${bookingData.totalKms}
-Pick up Time: ${bookingData.departureDate}, ${bookingData.pickupTime}
+Pick up Time: ${formatedDate}, ${bookingData.pickupTime}
 Total Amount: ${bookingData.totalFare}
 Name: ${bookingData.name}
 Phone: ${bookingData.mobile}
@@ -39,7 +42,7 @@ Email: ${bookingData.email}
       newBooking: result,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json({ error: "Failed to confirm booking" });
   }
 };
