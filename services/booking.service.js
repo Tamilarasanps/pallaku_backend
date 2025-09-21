@@ -17,6 +17,26 @@ exports.fetchAllBookings = async () => {
     const bookings = await bookingRepo.getAllBookings();
     return bookings;
   } catch (error) {
-    throw new Error("Error fetching all bookings: " + error.message);
+    throw new Error(error.message);
+  }
+};
+
+
+exports.updateTrip = async (tripId, data) => {
+  try {
+    return await bookingRepo.updateTrip(tripId, data);
+  } catch (err) {
+    console.error("Service error in updateTrip:", err);
+    throw err;
+  }
+};
+
+
+exports.login = async (username, password) => {
+  try {
+    const result = await bookingRepo.login(username, password);
+    return result;
+  } catch (error) {
+    throw new Error(error.message);
   }
 };

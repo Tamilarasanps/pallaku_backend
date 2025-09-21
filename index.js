@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const GetDistance = require("./routes/GetDistanceRoutes");
@@ -15,7 +16,7 @@ const placeRoutes = require("./routes/places.routes");
 const allowedOrigins = [
   "https://shreepallakcabs.com",
   "https://admin.shreepallakcabs.com",
-  "http://localhost:5173",
+  "http://localhost:5173","http://localhost:5174"
 ];
 
 const connect = require("./db");
@@ -25,6 +26,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Enable cookies to be read
+app.use(cookieParser());
 // Middleware
 app.use(
   cors({
