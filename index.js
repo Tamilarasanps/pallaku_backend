@@ -37,7 +37,6 @@ app.use(
   })
 );
 
-
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -83,5 +82,5 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
-  console.log('running in external server')
+  console.log("running in external server");
 });
