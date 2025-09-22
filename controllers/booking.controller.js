@@ -51,8 +51,8 @@ exports.login = async (req, res) => {
     if (result) {
       res.cookie("authToken", result.token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        secure: true, // must be true in production
+        sameSite: "None", // allows cross-domain cookies
         maxAge:
           result?.role === "admin" ? 15 * 60 * 1000 : 90 * 24 * 60 * 60 * 1000,
       });
