@@ -37,10 +37,11 @@ exports.updateTrip = async (req, res) => {
     res.status(200).json(updatedTrip); // ✅ send updated trip
   } catch (err) {
     console.error("Error updating trip:", err);
-    res.status(500).json({ message: "Internal server error", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
   }
 };
-
 
 exports.login = async (req, res) => {
   try {
@@ -52,10 +53,16 @@ exports.login = async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
+        maxAge:
+          result?.role === "admin" ? 15 * 60 * 1000 : 90 * 24 * 60 * 60 * 1000,
       });
 
       res.status(200).json({
         message: "Logged in successfully",
+        token: result.token,
+        role: result.role,
+        userId: result.userId,
+        message: result.message,
       });
     } else {
       res.status(401).json({ message: "Invalid username or password" });
