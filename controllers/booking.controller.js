@@ -53,8 +53,7 @@ exports.login = async (req, res) => {
         httpOnly: true,
         secure: true, // must be true in production
         sameSite: "None", // allows cross-domain cookies
-        maxAge:
-          result?.role === "admin" ? 15 * 60 * 1000 : 90 * 24 * 60 * 60 * 1000,
+        maxAge: 15 * 60 * 1000 : 90 * 24 * 60 * 60 * 1000,
       });
 
       res.status(200).json({
