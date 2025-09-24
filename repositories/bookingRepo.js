@@ -19,6 +19,7 @@ Email: ${data.email}
 From: ${data.from}
 To: ${data.to}
 Pickup Time: ${data.pickupTime}
+${data.tripType === "roundtrip" ? `Drop Time: ${data.dropTime}\n` : ""}
 Pickup Date: ${formatedDate}
 
 Vehicle Details:

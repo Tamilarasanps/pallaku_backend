@@ -15,6 +15,7 @@ const bookingSchema = new mongoose.Schema({
   to: { type: String, required: true },
   tripType: { type: String, required: true },
   pickupTime: { type: String, required: true },
+  dropTime: { type: String, required: true },
   vehicle: vehicleSchema,   
   totalKms: { type: Number, required: true },
   baseFair: { type: Number, required: true },

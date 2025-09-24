@@ -29,6 +29,11 @@ Trip Type: ${bookingData.tripType}
 Vehicle: ${bookingData.vehicle?.type} (${bookingData.vehicle?.capacity} seats)
 Total KM: ${bookingData.totalKms}
 Pick up Time: ${formatedDate}, ${bookingData.pickupTime}
+${
+  bookingData.tripType === "roundtrip"
+    ? `Drop Time ${bookingData.dropTime}`
+    : ""
+}
 Total Amount: ${bookingData.totalFare}
 Name: ${bookingData.name}
 Phone: ${bookingData.mobile}
