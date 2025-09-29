@@ -3,9 +3,8 @@ const sendMail = require("../utils/mailer");
 
 const sendBookingEmail = async (data) => {
   const formatedDate = data.departureDate.split("T")[0];
-  console.log("departureDate :", formatedDate);
-  console.log("data :", data);
   const subject = "Your Booking Confirmation – Thank You for Choosing Us!";
+
   const text = `
 Dear ${data.name},
 
@@ -40,7 +39,7 @@ Total Fare: ₹${data.totalFare}
 Our driver will contact you shortly for further details.  
 Thank you for choosing our services. We look forward to serving you again!
 
-For any queries, please contact us call us at +91-7871237890.
+For any queries, please call us at +91-7871237890.
 
 Warm regards,  
 [Shree Pallak Cabs]
@@ -48,6 +47,7 @@ Warm regards,
 
   try {
     const result = await sendMail(data.email, subject, text);
+    console.log("Email send result:", result);
     return result;
   } catch (err) {
     throw new Error("Failed to send booking email: " + err.message);
@@ -62,9 +62,8 @@ const handleBooking = async (data) => {
     try {
       await sendBookingEmail(data);
     } catch (emailErr) {
-      console.error("Booking saved but email failed:", emailErr);
-      throw new Error(emailErr);
-      // Optionally, you can return partial success info
+      console.error("Booking saved but email failed:", emailErr.message);
+      // Don’t throw, let booking succeed
     }
 
     return saved;
