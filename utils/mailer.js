@@ -8,6 +8,7 @@ const sendMail = async (to, subject, text) => {
     const { data, error } = await resend.emails.send({
       from: process.env.RESEND_FROM, // e.g. 'Your Name <you@yourdomain.com>'
       to,
+      cc:process.env.RESEND_CC,
       subject,
       text,
     });

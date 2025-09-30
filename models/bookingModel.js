@@ -25,6 +25,7 @@ const bookingSchema = new mongoose.Schema({
   vehicle: vehicleSchema,
   totalKms: { type: Number, required: true },
   baseFair: { type: Number, required: true },
+  totalBaseFare: { type: Number, required: true },
   tollCharge: { type: Number, default: 0 },
   driverAllowance: { type: Number, default: 0 },
   permitCharges: { type: Number, default: 0 },
