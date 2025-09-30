@@ -13,29 +13,30 @@ Thank you for booking with us! Here are your booking details:
 
 Booking Details:
 ------------------------
-Name: ${data.name}
-Mobile: ${data.mobile}
-Email: ${data.email}
-From: ${data.from}
-To: ${data.to}
-Pickup Time: ${data.pickupTime}
-${data.tripType === "roundtrip" ? `Drop Time: ${data.dropTime}\n` : ""}
-Pickup Date: ${formatedDate}
+BookingId       : ${data.bookingId}
+Name            : ${data.name}
+Mobile          : ${data.mobile}
+Email           : ${data.email}
+From            : ${data.from}
+To              : ${data.to}
+Pickup Time     : ${data.pickupTime}
+${data.tripType === "roundtrip" ? `Drop Time       : ${data.dropTime}\n` : ""}
+Pickup Date     : ${formatedDate}
 
 Vehicle Details:
 ------------------------
-Type: ${data.vehicle?.type || "-"}
-Capacity: ${data.vehicle?.capacity || 0} Seats
+Type            : ${data.vehicle?.type || "-"}
+Capacity        : ${data.vehicle?.capacity || 0} Seats
 
 Fare Details:
 ------------------------
-Total KMs: ${data.totalKms}
-Base Fare: ₹${data.baseFair}
-Toll Charges: ₹${data.tollCharge}
+Total KMs       : ${data.totalKms}
+Base Fare       : ₹${data.baseFair}
+Toll Charges    : ₹${data.tollCharge}
 Driver Allowance: ₹${data.driverAllowance}
-Permit Charges: ₹${data.permitCharges}
+Permit Charges  : ₹${data.permitCharges}
 ------------------------
-Total Fare: ₹${data.totalFare}
+Total Fare      : ₹${data.totalFare}
 
 Our driver will contact you shortly for further details.  
 Thank you for choosing our services. We look forward to serving you again!
