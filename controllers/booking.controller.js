@@ -43,6 +43,19 @@ exports.updateTrip = async (req, res) => {
   }
 };
 
+
+exports.statusUpdate = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payload = req.body;
+
+    const updatedBooking = await bookingService.statusUpdate(id, payload);
+    res.status(200).json(updatedBooking);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;

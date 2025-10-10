@@ -70,3 +70,15 @@ exports.login = async (username, password) => {
     throw new Error(error.message);
   }
 };
+
+exports.statusUpdate = async (id, payload) => {
+  try {
+    const updatedBooking = await Booking.findByIdAndUpdate(id, payload, {
+      new: true, // returns updated document
+      runValidators: true,
+    });
+    return updatedBooking;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};

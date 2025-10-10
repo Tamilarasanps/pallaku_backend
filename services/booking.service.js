@@ -40,3 +40,14 @@ exports.login = async (username, password) => {
     throw new Error(error.message);
   }
 };
+
+exports.statusUpdate = async (id, payload) => {
+  try {
+    const updatedBooking = await bookingRepo.statusUpdate(id, payload);
+    if (!updatedBooking) throw new Error("Booking not found");
+    return updatedBooking;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+

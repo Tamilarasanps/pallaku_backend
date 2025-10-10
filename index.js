@@ -56,7 +56,7 @@ app.use("/image", imageRoute);
 app.use("/api/places", placeRoutes);
 
 // Sample route
-app.get("/", (req, res) => {
+app.get("/", (req, res) => { 
   res.json({ message: "Welcome to the API!" });
 });
 app.get("/helloe", (req, res) => {

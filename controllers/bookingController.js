@@ -15,10 +15,9 @@ const confirmBooking = async (req, res) => {
 
   try {
     const result = await handleBooking(bookingData);
-    console.log("bookingData : ", bookingData);
 
     const formatedDate = bookingData.departureDate.split("T")[0];
-    console.log("formatedDate :", formatedDate);
+
     const message = `
 📅 *New Booking!*
 
