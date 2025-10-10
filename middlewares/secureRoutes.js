@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const secureRoute = async (req, res, next) => {
   try {
     let token = req.cookies?.authToken;
-    console.log(req.cookies)
     if (!token) {
       const err = new Error("Unauthorized access please log in");
       err.statusCode = 401;

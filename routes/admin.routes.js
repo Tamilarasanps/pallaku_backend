@@ -2,7 +2,9 @@
 const express = require("express");
 const router = express.Router();
 const { updateMobile } = require("../controllers/admin.controller");
+const secureRoute = require('../middlewares/secureRoutes')
 
-router.put("/mobile", updateMobile);
+
+router.put("/mobile",secureRoute, updateMobile);
 
 module.exports = router;

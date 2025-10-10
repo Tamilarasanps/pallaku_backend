@@ -8,7 +8,7 @@ const secureRoute = require('../middlewares/secureRoutes')
 
 router.get("/booking/:id",  getBookingById);
 router.get("/", secureRoute, getAllBookings);
-router.put("/update/:id",  updateTrip);
+router.put("/update/:id",secureRoute,  updateTrip);
 router.post("/adminLogin",  login);
 
 module.exports = router;
