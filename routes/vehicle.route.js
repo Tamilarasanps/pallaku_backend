@@ -5,7 +5,7 @@ const vehicleCtrl = require('../controllers/vehicle.controller');
 const secureRoute = require('../middlewares/secureRoutes')
 
 router.post('/create',secureRoute, upload.single('img'), vehicleCtrl.createVehicle);
-router.get("/",secureRoute, vehicleCtrl.getAllVehicles);
+router.get("/", vehicleCtrl.getAllVehicles);
 router.put("/update-vehicle/:id",secureRoute, upload.single("img"), vehicleCtrl.updateVehicle);
 router.delete("/delete-vehicle/:id",secureRoute, vehicleCtrl.deleteVehicle);
 
